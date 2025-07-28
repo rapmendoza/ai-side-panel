@@ -2,6 +2,7 @@
 
 import { Card } from '@/components/ui/card';
 import { ChatMessage } from '@/types/conversation';
+import { MessageCircle, X } from 'lucide-react';
 import { useState } from 'react';
 import { ChatInterface } from './ChatInterface';
 
@@ -84,59 +85,60 @@ export function SidePanel({ isOpen = true, onToggle }: SidePanelProps) {
 
   if (!isOpen) {
     return (
-      <div className="fixed right-4 bottom-4 z-50">
+      <div className="fixed right-6 bottom-6 z-50">
         <button
           onClick={onToggle}
-          className="bg-primary text-primary-foreground p-3 rounded-full shadow-lg hover:bg-primary/90 transition-colors"
+          className="bg-primary text-primary-foreground p-4 rounded-full shadow-lg hover:bg-primary/90 transition-all duration-200 hover:scale-110"
           aria-label="Open AI Assistant"
         >
-          <svg
-            className="w-6 h-6"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
-            />
-          </svg>
+          <MessageCircle className="w-6 h-6" />
         </button>
       </div>
     );
   }
 
   return (
-    <div className="fixed right-0 top-0 h-full w-96 z-40 bg-background border-l shadow-lg">
-      <Card className="h-full flex flex-col border-0 rounded-none">
-        <div className="flex items-center justify-between p-4 border-b">
-          <h2 className="text-lg font-semibold">AI Assistant</h2>
+    <div className="fixed inset-y-0 right-0 w-[800px] max-w-[90vw] z-50 transform transition-transform duration-300 ease-in-out">
+      <Card className="h-full flex flex-col border-0 rounded-none bg-background/95 backdrop-blur-sm shadow-2xl border-l">
+        {/* Header */}
+        <div className="flex items-center justify-between p-6 border-b bg-background/50 backdrop-blur-sm">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center">
+              <MessageCircle className="w-5 h-5 text-primary-foreground" />
+            </div>
+            <div>
+              <h2 className="text-xl font-semibold">AI Assistant</h2>
+              <p className="text-sm text-muted-foreground">
+                Payee & Category Management
+              </p>
+            </div>
+          </div>
           {onToggle && (
             <button
               onClick={onToggle}
-              className="p-2 hover:bg-muted rounded-md transition-colors"
+              className="p-2 hover:bg-muted rounded-lg transition-colors"
               aria-label="Close AI Assistant"
             >
-              <svg
-                className="w-4 h-4"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
+              <X className="w-5 h-5" />
             </button>
           )}
         </div>
 
-        <ChatInterface messages={messages} onSendMessage={handleSendMessage} />
+        {/* Chat Interface */}
+        <div className="flex-1 min-h-0">
+          <ChatInterface
+            messages={messages}
+            onSendMessage={handleSendMessage}
+          />
+        </div>
+
+        {/* Footer */}
+        <div className="p-4 border-t bg-background/50 backdrop-blur-sm">
+          <div className="text-xs text-muted-foreground text-center">
+            AI-powered accounting assistant • Type your requests in natural
+            language
+          </div>
+        </div>
       </Card>
     </div>
   );
