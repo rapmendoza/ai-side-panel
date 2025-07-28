@@ -135,9 +135,12 @@
     @apply mb-2 last:mb-0 text-current;
   }
 
-  .chat-markdown ul,
+  .chat-markdown ul {
+    @apply list-disc pl-5 mb-2 space-y-1;
+  }
+
   .chat-markdown ol {
-    @apply mb-2 pl-4 space-y-1;
+    @apply list-decimal pl-5 mb-2 space-y-1;
   }
 
   .chat-markdown li {
