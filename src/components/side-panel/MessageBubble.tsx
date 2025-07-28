@@ -3,6 +3,8 @@
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { cn } from '@/lib/utils';
 import { ChatMessage } from '@/types/conversation';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
 interface MessageBubbleProps {
   message: ChatMessage;
@@ -60,9 +62,17 @@ export function MessageBubble({ message }: MessageBubbleProps) {
                 style={{ animationDelay: '300ms' }}
               />
             </div>
-          ) : (
+          ) : isUser ? (
+            // User messages: plain text with whitespace preservation
             <div className="whitespace-pre-wrap break-words">
               {message.content}
+            </div>
+          ) : (
+            // AI messages: rendered markdown
+            <div className="chat-markdown">
+              <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                {message.content}
+              </ReactMarkdown>
             </div>
           )}
         </div>
