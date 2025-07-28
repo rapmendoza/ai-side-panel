@@ -137,185 +137,62 @@ ai-side-panel/
 └── README.md
 ```
 
-## Implementation Phases
+## Implementation Checklist
 
-### Phase 1: Project Setup & Database
+### Phase 1: Project Setup & Database (COMPLETED)
 
-1. Initialize Next.js project with TypeScript
-2. Install and configure Shadcn UI
-3. Set up Supabase project and database schema
-4. Configure environment variables
-5. Create basic project structure
+- [x] **Initialize Next.js project with TypeScript**: Set up a new Next.js 14+ project.
+- [x] **Install and configure Shadcn UI**: Integrate the component library.
+- [x] **Set up Supabase project and database schema**: Create tables for `payees`, `categories`, and `conversation_history`.
+- [x] **Configure environment variables**: Create a setup guide for environment configuration.
+- [x] **Create basic project structure**: Set up directories for components, types, hooks, and API routes.
 
 ### Phase 2: Database Layer
 
-1. Create Supabase client configuration
-2. Implement payee data access layer
-3. Implement category data access layer
-4. Create TypeScript types and interfaces
-5. Add database utility functions
+- [ ] **Implement Payee Data Access Layer**: Create functions for payee CRUD operations.
+- [ ] **Implement Category Data Access Layer**: Create functions for category CRUD operations.
+- [ ] **Create Database Utility Functions**: Add helpers for database interactions.
 
 ### Phase 3: AI Integration
 
-1. Set up OpenAI API client
-2. Create intent classification system
-3. Implement entity extraction
-4. Build clarification logic
-5. Create conversation management
+- [ ] **Set up OpenAI API client**: Configure the client for making API requests.
+- [ ] **Create Intent Classification System**: Build the logic to determine user intent.
+- [ ] **Implement Entity Extraction**: Extract relevant information from user input.
+- [ ] **Build Clarification Logic**: Handle ambiguous requests.
+- [ ] **Create Conversation Management**: Manage conversation history and context.
 
 ### Phase 4: Side Panel UI
 
-1. Create responsive side panel layout
-2. Build chat interface components
-3. Implement message display system
-4. Add input area with send functionality
-5. Style with Shadcn UI components
+- [ ] **Create Responsive Side Panel Layout**: Design the main side panel container.
+- [ ] **Build Chat Interface Components**: Create the chat window and message bubbles.
+- [ ] **Implement Message Display System**: Dynamically render conversation messages.
+- [ ] **Add Input Area with Send Functionality**: Create the user input field.
+- [ ] **Style with Shadcn UI Components**: Apply consistent styling.
 
-### Phase 5: CRUD Operations
+### Phase 5: API Endpoints & CRUD Operations
 
-1. Implement payee CRUD operations
-2. Implement category CRUD operations
-3. Add confirmation dialogs
-4. Create success/error feedback
-5. Integrate with AI processing
+- [ ] **Implement Payee API Endpoints**: Create `GET`, `POST`, `PUT`, and `DELETE` routes for payees.
+- [ ] **Implement Category API Endpoints**: Create `GET`, `POST`, `PUT`, and `DELETE` routes for categories.
+- [ ] **Add Confirmation Dialogs**: Implement UI for confirming destructive actions.
+- [ ] **Create Success/Error Feedback**: Provide visual feedback for operations.
+- [ ] **Integrate with AI Processing**: Connect API endpoints to the AI intent processor.
 
 ### Phase 6: Natural Language Processing
 
-1. Create intent processing pipeline
-2. Implement entity extraction logic
-3. Build clarification workflows
-4. Add context awareness
-5. Handle edge cases and errors
+- [ ] **Create Intent Processing Pipeline**: Connect all NLP components.
+- [ ] **Implement Entity Extraction Logic**: Refine entity extraction from text.
+- [ ] **Build Clarification Workflows**: Implement multi-turn clarification conversations.
+- [ ] **Add Context Awareness**: Maintain context across multiple messages.
+- [ ] **Handle Edge Cases and Errors**: Gracefully manage failed NLP operations.
 
 ### Phase 7: Integration & Testing
 
-1. Connect all components
-2. Test end-to-end workflows
-3. Handle error scenarios
-4. Optimize performance
-5. Final polish and refinements
+- [ ] **Connect All Components**: Integrate UI, API, and database layers.
+- [ ] **Test End-to-End Workflows**: Verify all features work as expected.
+- [ ] **Handle Error Scenarios**: Test and refine error handling.
+- [ ] **Optimize Performance**: Identify and address performance bottlenecks.
+- [ ] **Final Polish and Refinements**: Final UI/UX improvements.
 
 ## Key Components Detail
 
-### 1. Intent Processor (`lib/intent-processor.ts`)
-
-```typescript
-export interface ProcessedIntent {
-  action: 'create' | 'read' | 'update' | 'delete' | 'clarify';
-  entity: 'payee' | 'category';
-  data: Record<string, any>;
-  confidence: number;
-  needsClarification: boolean;
-  clarificationQuestions?: string[];
-}
-```
-
-### 2. Chat Interface (`components/side-panel/ChatInterface.tsx`)
-
-- Real-time message display
-- Typing indicators
-- Message history
-- Action buttons for confirmations
-
-### 3. Clarification System
-
-- Detect incomplete information
-- Generate contextual questions
-- Process follow-up responses
-- Maintain conversation context
-
-### 4. CRUD Operations
-
-- **Create**: Extract entity data from natural language
-- **Read**: Search and filter with natural language queries
-- **Update**: Identify target and modifications from text
-- **Delete**: Confirm deletion with safety checks
-
-## API Endpoints
-
-### `/api/ai/chat`
-
-- Process natural language input
-- Return AI response and extracted intent
-- Handle conversation context
-
-### `/api/ai/process-intent`
-
-- Parse user intent from message
-- Extract entities and actions
-- Return structured data for operations
-
-### `/api/payees`
-
-- GET: List/search payees
-- POST: Create new payee
-- PUT: Update existing payee
-- DELETE: Remove payee
-
-### `/api/categories`
-
-- GET: List/search categories
-- POST: Create new category
-- PUT: Update existing category
-- DELETE: Remove category
-
-## Natural Language Examples
-
-### Payee Operations
-
-- "Add a new payee called ABC Corp"
-- "Update John's contact info to john@example.com"
-- "Delete the payee XYZ Company"
-- "Show me all payees with 'tech' in the name"
-
-### Category Operations
-
-- "Create an expense category for office supplies"
-- "Add a subcategory under Marketing called Social Media"
-- "Update the Utilities category description"
-- "Remove the Travel category"
-
-### Clarification Scenarios
-
-- User: "Add a new payee"
-- AI: "I'd be happy to help you add a new payee. What's the name of the payee you'd like to add?"
-
-## Error Handling
-
-1. **API Errors**: Graceful handling of OpenAI and Supabase errors
-2. **Validation**: Input validation for all CRUD operations
-3. **Clarification**: When intent is unclear or incomplete
-4. **Confirmation**: For destructive operations like deletions
-5. **Fallback**: Manual form input when AI processing fails
-
-## Security Considerations
-
-1. Input sanitization for all user inputs
-2. Proper error handling without exposing sensitive data
-3. Rate limiting for AI API calls
-4. Supabase RLS (Row Level Security) policies
-5. Environment variable protection
-
-## Performance Optimizations
-
-1. Implement caching for frequent queries
-2. Debounce user input processing
-3. Optimize AI API calls
-4. Use React Query for data fetching
-5. Implement pagination for large lists
-
-## Success Metrics
-
-1. Successful intent recognition rate (>90%)
-2. User query completion rate
-3. Average clarification rounds needed
-4. Response time for AI processing
-5. User satisfaction with natural language interactions
-
-## Future Enhancements (Out of Scope)
-
-- Multi-language support
-- Voice input/output
-- Advanced analytics
-- Bulk operations
-- Integration with external accounting systems
+### 1. Intent Processor (`
